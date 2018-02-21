@@ -29,6 +29,9 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
     /// </summary>
     public partial class MarkdownTextBlock
     {
+        private MarkdownRenderer _renderer;
+        private MarkdownDocument _markdown = new MarkdownDocument();
+
         /// <summary>
         /// Sets the Markdown Renderer for Rendering the UI.
         /// </summary>
@@ -37,6 +40,7 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
             where T : MarkdownRenderer
         {
             renderertype = typeof(T);
+            _renderer = Activator.CreateInstance(renderertype, _markdown, this, this, this) as MarkdownRenderer;
         }
 
         /// <summary>
@@ -56,6 +60,11 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
                 return;
             }
 
+            if (_renderer == null)
+            {
+                return;
+            }
+
             // Disconnect from OnClick handlers.
             UnhookListeners();
 
@@ -63,88 +72,81 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
             try
             {
                 // Try to parse the markdown.
-                MarkdownDocument markdown = new MarkdownDocument();
-                markdown.Parse(Text);
+                _markdown.Parse(Text);
 
                 // Now try to display it
-                var renderer = Activator.CreateInstance(renderertype, markdown, this, this, this) as MarkdownRenderer;
-                if (renderer == null)
-                {
-                    throw new Exception("Markdown Renderer was not of the correct type.");
-                }
+                _renderer.Background = Background;
+                _renderer.BorderBrush = BorderBrush;
+                _renderer.BorderThickness = BorderThickness;
+                _renderer.CharacterSpacing = CharacterSpacing;
+                _renderer.FontFamily = FontFamily;
+                _renderer.FontSize = FontSize;
+                _renderer.FontStretch = FontStretch;
+                _renderer.FontStyle = FontStyle;
+                _renderer.FontWeight = FontWeight;
+                _renderer.Foreground = Foreground;
+                _renderer.IsTextSelectionEnabled = IsTextSelectionEnabled;
+                _renderer.Padding = Padding;
+                _renderer.CodeBackground = CodeBackground;
+                _renderer.CodeBorderBrush = CodeBorderBrush;
+                _renderer.CodeBorderThickness = CodeBorderThickness;
+                _renderer.InlineCodeBorderThickness = InlineCodeBorderThickness;
+                _renderer.InlineCodeBackground = InlineCodeBackground;
+                _renderer.InlineCodeBorderBrush = InlineCodeBorderBrush;
+                _renderer.InlineCodePadding = InlineCodePadding;
+                _renderer.InlineCodeFontFamily = InlineCodeFontFamily;
+                _renderer.CodeForeground = CodeForeground;
+                _renderer.CodeFontFamily = CodeFontFamily;
+                _renderer.CodePadding = CodePadding;
+                _renderer.CodeMargin = CodeMargin;
+                _renderer.EmojiFontFamily = EmojiFontFamily;
+                _renderer.Header1FontSize = Header1FontSize;
+                _renderer.Header1FontWeight = Header1FontWeight;
+                _renderer.Header1Margin = Header1Margin;
+                _renderer.Header1Foreground = Header1Foreground;
+                _renderer.Header2FontSize = Header2FontSize;
+                _renderer.Header2FontWeight = Header2FontWeight;
+                _renderer.Header2Margin = Header2Margin;
+                _renderer.Header2Foreground = Header2Foreground;
+                _renderer.Header3FontSize = Header3FontSize;
+                _renderer.Header3FontWeight = Header3FontWeight;
+                _renderer.Header3Margin = Header3Margin;
+                _renderer.Header3Foreground = Header3Foreground;
+                _renderer.Header4FontSize = Header4FontSize;
+                _renderer.Header4FontWeight = Header4FontWeight;
+                _renderer.Header4Margin = Header4Margin;
+                _renderer.Header4Foreground = Header4Foreground;
+                _renderer.Header5FontSize = Header5FontSize;
+                _renderer.Header5FontWeight = Header5FontWeight;
+                _renderer.Header5Margin = Header5Margin;
+                _renderer.Header5Foreground = Header5Foreground;
+                _renderer.Header6FontSize = Header6FontSize;
+                _renderer.Header6FontWeight = Header6FontWeight;
+                _renderer.Header6Margin = Header6Margin;
+                _renderer.Header6Foreground = Header6Foreground;
+                _renderer.HorizontalRuleBrush = HorizontalRuleBrush;
+                _renderer.HorizontalRuleMargin = HorizontalRuleMargin;
+                _renderer.HorizontalRuleThickness = HorizontalRuleThickness;
+                _renderer.ListMargin = ListMargin;
+                _renderer.ListGutterWidth = ListGutterWidth;
+                _renderer.ListBulletSpacing = ListBulletSpacing;
+                _renderer.ParagraphMargin = ParagraphMargin;
+                _renderer.QuoteBackground = QuoteBackground;
+                _renderer.QuoteBorderBrush = QuoteBorderBrush;
+                _renderer.QuoteBorderThickness = QuoteBorderThickness;
+                _renderer.QuoteForeground = QuoteForeground;
+                _renderer.QuoteMargin = QuoteMargin;
+                _renderer.QuotePadding = QuotePadding;
+                _renderer.TableBorderBrush = TableBorderBrush;
+                _renderer.TableBorderThickness = TableBorderThickness;
+                _renderer.TableCellPadding = TableCellPadding;
+                _renderer.TableMargin = TableMargin;
+                _renderer.TextWrapping = TextWrapping;
+                _renderer.LinkForeground = LinkForeground;
+                _renderer.ImageStretch = ImageStretch;
+                _renderer.WrapCodeBlock = WrapCodeBlock;
 
-                renderer.Background = Background;
-                renderer.BorderBrush = BorderBrush;
-                renderer.BorderThickness = BorderThickness;
-                renderer.CharacterSpacing = CharacterSpacing;
-                renderer.FontFamily = FontFamily;
-                renderer.FontSize = FontSize;
-                renderer.FontStretch = FontStretch;
-                renderer.FontStyle = FontStyle;
-                renderer.FontWeight = FontWeight;
-                renderer.Foreground = Foreground;
-                renderer.IsTextSelectionEnabled = IsTextSelectionEnabled;
-                renderer.Padding = Padding;
-                renderer.CodeBackground = CodeBackground;
-                renderer.CodeBorderBrush = CodeBorderBrush;
-                renderer.CodeBorderThickness = CodeBorderThickness;
-                renderer.InlineCodeBorderThickness = InlineCodeBorderThickness;
-                renderer.InlineCodeBackground = InlineCodeBackground;
-                renderer.InlineCodeBorderBrush = InlineCodeBorderBrush;
-                renderer.InlineCodePadding = InlineCodePadding;
-                renderer.InlineCodeFontFamily = InlineCodeFontFamily;
-                renderer.CodeForeground = CodeForeground;
-                renderer.CodeFontFamily = CodeFontFamily;
-                renderer.CodePadding = CodePadding;
-                renderer.CodeMargin = CodeMargin;
-                renderer.EmojiFontFamily = EmojiFontFamily;
-                renderer.Header1FontSize = Header1FontSize;
-                renderer.Header1FontWeight = Header1FontWeight;
-                renderer.Header1Margin = Header1Margin;
-                renderer.Header1Foreground = Header1Foreground;
-                renderer.Header2FontSize = Header2FontSize;
-                renderer.Header2FontWeight = Header2FontWeight;
-                renderer.Header2Margin = Header2Margin;
-                renderer.Header2Foreground = Header2Foreground;
-                renderer.Header3FontSize = Header3FontSize;
-                renderer.Header3FontWeight = Header3FontWeight;
-                renderer.Header3Margin = Header3Margin;
-                renderer.Header3Foreground = Header3Foreground;
-                renderer.Header4FontSize = Header4FontSize;
-                renderer.Header4FontWeight = Header4FontWeight;
-                renderer.Header4Margin = Header4Margin;
-                renderer.Header4Foreground = Header4Foreground;
-                renderer.Header5FontSize = Header5FontSize;
-                renderer.Header5FontWeight = Header5FontWeight;
-                renderer.Header5Margin = Header5Margin;
-                renderer.Header5Foreground = Header5Foreground;
-                renderer.Header6FontSize = Header6FontSize;
-                renderer.Header6FontWeight = Header6FontWeight;
-                renderer.Header6Margin = Header6Margin;
-                renderer.Header6Foreground = Header6Foreground;
-                renderer.HorizontalRuleBrush = HorizontalRuleBrush;
-                renderer.HorizontalRuleMargin = HorizontalRuleMargin;
-                renderer.HorizontalRuleThickness = HorizontalRuleThickness;
-                renderer.ListMargin = ListMargin;
-                renderer.ListGutterWidth = ListGutterWidth;
-                renderer.ListBulletSpacing = ListBulletSpacing;
-                renderer.ParagraphMargin = ParagraphMargin;
-                renderer.QuoteBackground = QuoteBackground;
-                renderer.QuoteBorderBrush = QuoteBorderBrush;
-                renderer.QuoteBorderThickness = QuoteBorderThickness;
-                renderer.QuoteForeground = QuoteForeground;
-                renderer.QuoteMargin = QuoteMargin;
-                renderer.QuotePadding = QuotePadding;
-                renderer.TableBorderBrush = TableBorderBrush;
-                renderer.TableBorderThickness = TableBorderThickness;
-                renderer.TableCellPadding = TableCellPadding;
-                renderer.TableMargin = TableMargin;
-                renderer.TextWrapping = TextWrapping;
-                renderer.LinkForeground = LinkForeground;
-                renderer.ImageStretch = ImageStretch;
-                renderer.WrapCodeBlock = WrapCodeBlock;
-
-                _rootElement.Child = renderer.Render();
+                _rootElement.Child = _renderer.Render();
             }
             catch (Exception ex)
             {

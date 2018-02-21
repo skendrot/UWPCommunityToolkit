@@ -11,6 +11,7 @@
 // ******************************************************************
 
 using Microsoft.Toolkit.Uwp.UI.Controls.Markdown.Render;
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -59,6 +60,11 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
         {
             // Grab our root
             _rootElement = GetTemplateChild("RootElement") as Border;
+
+            if (_renderer == null)
+            {
+                _renderer = Activator.CreateInstance(renderertype, _markdown, this, this, this) as MarkdownRenderer;
+            }
 
             // And make sure to render any markdown we have.
             RenderMarkdown();
