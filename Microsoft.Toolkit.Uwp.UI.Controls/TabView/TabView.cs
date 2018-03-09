@@ -15,11 +15,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace Microsoft.Toolkit.Uwp.UI.Controls
 {
-    public class TabView : ItemsControl
+    public partial class TabView : ItemsControl
     {
+        protected override DependencyObject GetContainerForItemOverride()
+        {
+            return new TabItem();
+        }
+
+        protected override bool IsItemItsOwnContainerOverride(object item)
+        {
+            return item is TabItem;
+        }
     }
 }
