@@ -22,6 +22,11 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
 {
     public partial class TabView : ItemsControl
     {
+        public TabView()
+        {
+            DefaultStyleKey = typeof(TabView);
+        }
+
         protected override DependencyObject GetContainerForItemOverride()
         {
             return new TabItem();
