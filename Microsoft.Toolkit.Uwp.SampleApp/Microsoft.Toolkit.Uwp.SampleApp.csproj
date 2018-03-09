@@ -613,6 +613,9 @@
     <Compile Include="SamplePages\StringExtensions\StringExtensionsPage.xaml.cs">
       <DependentUpon>StringExtensionsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SamplePages\TabView\TabViewPage.xaml.cs">
+      <DependentUpon>TabViewPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SamplePages\TextToolbar\SampleFormatter.cs" />
     <Compile Include="SamplePages\TextToolbar\TextToolbarPage.xaml.cs">
       <DependentUpon>TextToolbarPage.xaml</DependentUpon>
@@ -955,6 +958,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SamplePages\StringExtensions\StringExtensionsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SamplePages\TabView\TabViewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
