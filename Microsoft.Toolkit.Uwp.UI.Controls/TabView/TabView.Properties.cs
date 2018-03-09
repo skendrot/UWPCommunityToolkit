@@ -50,5 +50,23 @@ namespace Microsoft.Toolkit.Uwp.UI.Controls
             typeof(int),
             typeof(TabView),
             new PropertyMetadata(-1));
+
+        /// <summary>
+        /// Gets the content for the selected <see cref="TabItem"/>.
+        /// </summary>
+        public object SelectedContent
+        {
+            get { return (object)GetValue(SelectedContentProperty); }
+            internal set { SetValue(SelectedContentProperty, value); }
+        }
+
+        /// <summary>
+        /// Identifies the <see cref="SelectedContent"/> property.
+        /// </summary>
+        public static readonly DependencyProperty SelectedContentProperty = DependencyProperty.Register(
+            nameof(SelectedContent),
+            typeof(object),
+            typeof(TabView),
+            new PropertyMetadata(null));
     }
 }
